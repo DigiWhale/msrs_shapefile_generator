@@ -20,7 +20,7 @@ df = pd.read_csv('master_log.csv')
 
 map_con = InMemMap("../maryland-latest.osm.pbf", use_latlon=True)
 
-for entity in osmread.parse_file(osm_fn):
+for entity in osmread.parse_file("../maryland-latest.osm.pbf"):
     if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
         for node_a, node_b in zip(entity.nodes, entity.nodes[1:]):
             map_con.add_edge(node_a, node_b)
