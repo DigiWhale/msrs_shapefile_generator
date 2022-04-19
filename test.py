@@ -18,9 +18,10 @@ try:
   fp = get_data("maryland", update=False, directory='.')
   osm = OSM(fp, bounding_box=[xmin, ymin, xmax, ymax])
   # Read all drivable roads
-  drive_net = osm.get_network(network_type="driving")
-  drive_net.to_file("maryland.shp")
+  # drive_net = osm.get_network(network_type="driving")
+  # drive_net.to_file("maryland.shp")
   nodes, edges = osm.get_network(network_type="driving")
+  edges.to_file("maryland_edges.shp")
   G = osm.to_graph(nodes, edges, graph_type="networkx")
   print(G)
   # drive_net.show()
