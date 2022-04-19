@@ -4,6 +4,20 @@ from leuvenmapmatching import visualization as mmviz
 import pandas as pd
 import osmread
 import geopandas
+import traceback
+from pyrosm import OSM
+from pyrosm import get_data
+
+try:
+  fp = get_data("maryland", update=False, directory='.')
+  osm = OSM(fp)
+  # Read all drivable roads
+  drive_net = osm.get_network(network_type="driving")
+  drive_net.to_file("maryland.shp")
+  # drive_net.show()
+  # print(drive_net)
+except:
+  print(traceback.format_exc())
 
 # map_con = InMemMap("mymap", graph={
 #     "A": ((1, 1), ["B", "C", "X"]),
@@ -19,7 +33,7 @@ import geopandas
 # }, use_latlon=False)
 df = pd.read_csv('master_log.csv')
 location = 'maryland'
-geodf = geopandas.read_file(f"../{location}.shp")
+geodf = geopandas.read_file(f"maryland.shp")
 # get min and max coordinates of rpi route
 ymin = df['jetson_rpi_lat'].max()
 ymax = df['jetson_rpi_lat'].min()
