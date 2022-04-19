@@ -15,7 +15,7 @@ import pandas as pd
 #     "K": ((1, 5), ["B", "D", "L"]),
 #     "L": ((2, 6), ["K", "D", "F"])
 # }, use_latlon=False)
-df = pd.read('master_log.csv')
+df = pd.read_csv('master_log.csv')
 
 map_con = InMemMap("../maryland-latest.osm.pbf", use_latlon=True)
 
