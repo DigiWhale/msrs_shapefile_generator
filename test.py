@@ -2,6 +2,7 @@ from leuvenmapmatching.matcher.distance import DistanceMatcher
 from leuvenmapmatching.map.inmem import InMemMap
 from leuvenmapmatching import visualization as mmviz
 import pandas as pd
+import osmread
 
 # map_con = InMemMap("mymap", graph={
 #     "A": ((1, 1), ["B", "C", "X"]),
@@ -18,6 +19,15 @@ import pandas as pd
 df = pd.read_csv('master_log.csv')
 
 map_con = InMemMap("../maryland-latest.osm.pbf", use_latlon=True)
+
+for entity in osmread.parse_file(osm_fn):
+    if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
+        for node_a, node_b in zip(entity.nodes, entity.nodes[1:]):
+            map_con.add_edge(node_a, node_b)
+            map_con.add_edge(node_b, node_a)
+    if isinstance(entity, osmread.Node):
+        map_con.add_node(entity.id, (entity.lat, entity.lon))
+map_con.purge()
 
 path = []
 
