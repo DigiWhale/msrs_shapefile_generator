@@ -3,7 +3,7 @@ from fmm import Network,NetworkGraph,STMATCH,STMATCHConfig
 
 def load_network(shapefile):
   network = Network(shapefile)
-  print(f"Nodes {network.get_node_count()} edges {network.get_edge_count()}")
+  # print(f"Nodes {network.get_node_count()} edges {network.get_edge_count()}")
   return network
 
 def create_graph(network):
