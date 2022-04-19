@@ -1,5 +1,6 @@
 from leuvenmapmatching.matcher.distance import DistanceMatcher
 from leuvenmapmatching.map.inmem import InMemMap
+from leuvenmapmatching import visualization as mmviz
 
 map_con = InMemMap("mymap", graph={
     "A": ((1, 1), ["B", "C", "X"]),
@@ -29,3 +30,5 @@ print("Nodes\n------")
 print(nodes)
 print("")
 matcher.print_lattice_stats()
+
+mmviz.plot_map(map_con, matcher=matcher, show_labels=True, show_matching=True, show_graph=True, filename="my_plot.png")
