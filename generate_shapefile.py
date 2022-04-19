@@ -1,9 +1,12 @@
 import geopandas as gpd
 from shapely.geometry import Polygon
 import folium
+import pandas as pd
 
-lat_point_list = [50.854457, 52.518172, 50.072651, 48.853033, 50.854457]
-lon_point_list = [4.377184, 13.407759, 14.435935, 2.349553, 4.377184]
+df = pd.read_csv('master_log.csv')
+
+lat_point_list = df['jetson_rpi_lat'].tolist()
+lon_point_list = df['jetson_rpi_lng'].tolist()
 
 polygon_geom = Polygon(zip(lon_point_list, lat_point_list))
 crs = {'init': 'epsg:4326'}
