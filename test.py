@@ -18,7 +18,7 @@ print([xmin, ymin, xmax, ymax])
 try:
   # fp = get_data("maryland", update=False, directory='.')
   # osm = OSM(fp, bounding_box=[xmin, ymin, xmax, ymax])
-  osm = OSM('maryland-latest.osm.pbf', bounding_box=[xmin, ymin, xmax, ymax])
+  osm = OSM('maryland-latest.osm.pbf', bounding_box=[xmin, ymax, xmax, ymin])
   # Read all drivable roads
   # drive_net = osm.get_network(network_type="driving")
   # drive_net.to_file("maryland.shp")
