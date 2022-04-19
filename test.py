@@ -15,8 +15,9 @@ ymax = df['jetson_rpi_lat'].min()
 xmin = df['jetson_rpi_lng'].max()
 xmax = df['jetson_rpi_lng'].min()
 try:
-  fp = get_data("maryland", update=False, directory='.')
-  osm = OSM(fp, bounding_box=[xmin, ymin, xmax, ymax])
+  # fp = get_data("maryland", update=False, directory='.')
+  # osm = OSM(fp, bounding_box=[xmin, ymin, xmax, ymax])
+  osm = OSM('maryland-latest.osm.pbf', bounding_box=[xmin, ymin, xmax, ymax])
   # Read all drivable roads
   # drive_net = osm.get_network(network_type="driving")
   # drive_net.to_file("maryland.shp")
