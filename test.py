@@ -19,7 +19,7 @@ import geopandas
 # }, use_latlon=False)
 df = pd.read_csv('master_log.csv')
 location = 'maryland'
-geodf = geopandas.read_file(f"{location}.shp")
+geodf = geopandas.read_file(f"../{location}.shp")
 # get min and max coordinates of rpi route
 ymin = df['jetson_rpi_lat'].max()
 ymax = df['jetson_rpi_lat'].min()
