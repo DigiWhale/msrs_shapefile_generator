@@ -8,12 +8,21 @@ import traceback
 from pyrosm import OSM
 from pyrosm import get_data
 
+df = pd.read_csv('master_log.csv')
+location = 'maryland'
+ymin = df['jetson_rpi_lat'].max()
+ymax = df['jetson_rpi_lat'].min()
+xmin = df['jetson_rpi_lng'].max()
+xmax = df['jetson_rpi_lng'].min()
 try:
   fp = get_data("maryland", update=False, directory='.')
-  osm = OSM(fp)
+  osm = OSM(fp, bounding_box=[xmin, ymin, xmax, ymax])
   # Read all drivable roads
   drive_net = osm.get_network(network_type="driving")
   drive_net.to_file("maryland.shp")
+  nodes, edges = osm.get_network(network_type="driving")
+  G = osm.to_graph(nodes, edges, graph_type="networkx")
+  print(G)
   # drive_net.show()
   # print(drive_net)
 except:
@@ -31,18 +40,13 @@ except:
 #     "K": ((1, 5), ["B", "D", "L"]),
 #     "L": ((2, 6), ["K", "D", "F"])
 # }, use_latlon=False)
-df = pd.read_csv('master_log.csv')
-location = 'maryland'
 geodf = geopandas.read_file(f"maryland.shp")
 # get min and max coordinates of rpi route
-ymin = df['jetson_rpi_lat'].max()
-ymax = df['jetson_rpi_lat'].min()
-xmin = df['jetson_rpi_lng'].max()
-xmax = df['jetson_rpi_lng'].min()
 #crop shape file to fit route
 cropped_map_data = geodf.cx[xmin:xmax, ymin:ymax]
 
-map_con = InMemMap(cropped_map_data, use_latlon=True, use_rtree=True, index_edges=True)
+# map_con = InMemMap(cropped_map_data, use_latlon=True, use_rtree=True, index_edges=True)
+map_con = InMemMap("mymap", graph=G, use_latlon=True, use_rtree=True, index_edges=True)
 
 for entity in osmread.parse_file(cropped_map_data):
     if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
