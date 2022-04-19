@@ -1,4 +1,4 @@
-from fmm import Network,NetworkGraph,STMATCH,STMATCHConfig
+# from fmm import Network,NetworkGraph,STMATCH,STMATCHConfig
 import osmnx as ox
 import time
 from shapely.geometry import Polygon
