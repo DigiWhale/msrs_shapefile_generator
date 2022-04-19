@@ -25,7 +25,7 @@ try:
   # drive_net = osm.get_network(network_type="driving")
   # drive_net.to_file("maryland.shp")
   print('Extracting drivable roads...')
-  nodes, edges = osm.get_network(network_type="driving")
+  nodes, edges = osm.get_network(network_type="driving", nodes=True)
   print('Extracting drivable roads... done')
   edges.to_file("maryland_edges.shp")
   G = osm.to_graph(nodes, edges, graph_type="networkx")
