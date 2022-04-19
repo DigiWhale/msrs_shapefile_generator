@@ -3,6 +3,7 @@ from leuvenmapmatching.map.inmem import InMemMap
 from leuvenmapmatching import visualization as mmviz
 import pandas as pd
 import osmread
+import geopandas
 
 # map_con = InMemMap("mymap", graph={
 #     "A": ((1, 1), ["B", "C", "X"]),
@@ -17,10 +18,19 @@ import osmread
 #     "L": ((2, 6), ["K", "D", "F"])
 # }, use_latlon=False)
 df = pd.read_csv('master_log.csv')
+location = 'maryland'
+geodf = geopandas.read_file(f"{location}.shp")
+# get min and max coordinates of rpi route
+ymin = df['jetson_rpi_lat'].max()
+ymax = df['jetson_rpi_lat'].min()
+xmin = df['jetson_rpi_lng'].max()
+xmax = df['jetson_rpi_lng'].min()
+#crop shape file to fit route
+cropped_map_data = geodf.cx[xmin:xmax, ymin:ymax]
 
-map_con = InMemMap("../maryland-latest.osm.pbf", use_latlon=True)
+map_con = InMemMap(cropped_map_data, use_latlon=True, use_rtree=True, index_edges=True)
 
-for entity in osmread.parse_file("../maryland-latest.osm.pbf"):
+for entity in osmread.parse_file(cropped_map_data):
     if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
         for node_a, node_b in zip(entity.nodes, entity.nodes[1:]):
             map_con.add_edge(node_a, node_b)
