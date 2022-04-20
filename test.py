@@ -36,7 +36,7 @@ try:
   # edges.to_file("maryland_edges.shp")
   # G = ox.gdfs_to_graph(nodes, edges)
   # G = osm.to_graph(nodes, edges, graph_type="networkx")
-  print(G)
+  print(G[0])
   # drive_net.show()
   # print(drive_net)
 except:
