@@ -76,8 +76,8 @@ matcher = DistanceMatcher(map_con, max_dist=2, obs_noise=1, min_prob_norm=0.5, m
 # states, _ = matcher.match(path)
 nodes = matcher.path_pred_onlynodes
 
-print("States\n------")
-print(states)
+# print("States\n------")
+# print(states)
 print("Nodes\n------")
 print(nodes)
 print("")
