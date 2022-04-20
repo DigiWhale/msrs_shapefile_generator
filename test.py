@@ -7,6 +7,7 @@ import geopandas
 import traceback
 from pyrosm import OSM
 from pyrosm import get_data
+import osmnx as ox
 
 df = pd.read_csv('master_log.csv')
 location = 'maryland'
@@ -26,10 +27,11 @@ try:
   # drive_net = osm.get_network(network_type="driving")
   # drive_net.to_file("maryland.shp")
   print('Extracting drivable roads...')
-  nodes, edges = osm.get_network(network_type="driving", nodes=True)
+  # nodes, edges = osm.get_network(network_type="driving", nodes=True)
+  G = ox.graph_from_bbox(xmax, xmin, ymax, ymin, network_type='drive')
   print('Extracting drivable roads... done')
-  edges.to_file("maryland_edges.shp")
-  G = osm.to_graph(nodes, edges, graph_type="networkx")
+  # edges.to_file("maryland_edges.shp")
+  # G = osm.to_graph(nodes, edges, graph_type="networkx")
   print(G)
   # drive_net.show()
   # print(drive_net)
@@ -48,22 +50,22 @@ except:
 #     "K": ((1, 5), ["B", "D", "L"]),
 #     "L": ((2, 6), ["K", "D", "F"])
 # }, use_latlon=False)
-geodf = geopandas.read_file(f"maryland.shp")
+# geodf = geopandas.read_file(f"maryland.shp")
 # get min and max coordinates of rpi route
 #crop shape file to fit route
-cropped_map_data = geodf.cx[xmin:xmax, ymin:ymax]
+# cropped_map_data = geodf.cx[xmin:xmax, ymin:ymax]
 
 # map_con = InMemMap(cropped_map_data, use_latlon=True, use_rtree=True, index_edges=True)
 map_con = InMemMap("mymap", graph=G, use_latlon=True, use_rtree=True, index_edges=True)
 
-for entity in osmread.parse_file(cropped_map_data):
-    if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
-        for node_a, node_b in zip(entity.nodes, entity.nodes[1:]):
-            map_con.add_edge(node_a, node_b)
-            map_con.add_edge(node_b, node_a)
-    if isinstance(entity, osmread.Node):
-        map_con.add_node(entity.id, (entity.lat, entity.lon))
-map_con.purge()
+# for entity in osmread.parse_file(cropped_map_data):
+#     if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
+#         for node_a, node_b in zip(entity.nodes, entity.nodes[1:]):
+#             map_con.add_edge(node_a, node_b)
+#             map_con.add_edge(node_b, node_a)
+#     if isinstance(entity, osmread.Node):
+#         map_con.add_node(entity.id, (entity.lat, entity.lon))
+# map_con.purge()
 
 path = []
 
