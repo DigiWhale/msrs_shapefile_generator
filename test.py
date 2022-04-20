@@ -30,6 +30,8 @@ try:
   # nodes, edges = osm.get_network(network_type="driving", nodes=True)
   G = ox.graph_from_bbox(ymax, ymin, xmax, xmin, network_type='drive')
   print('Extracting drivable roads... done')
+  fig, ax = ox.plot_graph(ox.project_graph(G))
+  fig.savefig('maryland.png')
   # edges.to_file("maryland_edges.shp")
   # G = osm.to_graph(nodes, edges, graph_type="networkx")
   print(G)
@@ -73,11 +75,11 @@ for index, row in df.iterrows():
     path.append((df['jetson_rpi_lat'].iloc[index], df['jetson_rpi_lng'].iloc[index]))
 
 matcher = DistanceMatcher(map_con, max_dist=2, obs_noise=1, min_prob_norm=0.5, max_lattice_width=5)
-# states, _ = matcher.match(path)
+states, _ = matcher.match(path)
 nodes = matcher.path_pred_onlynodes
 
-# print("States\n------")
-# print(states)
+print("States\n------")
+print(states)
 print("Nodes\n------")
 print(nodes)
 print("")
