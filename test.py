@@ -28,7 +28,7 @@ try:
   # drive_net.to_file("maryland.shp")
   print('Extracting drivable roads...')
   # nodes, edges = osm.get_network(network_type="driving", nodes=True)
-  G = ox.graph_from_bbox(ymax, ymin, xmax, xmin, network_type='drive')
+  G = ox.graph_from_bbox(ymax, ymin, xmax, xmin, network_type='drive', simplify=False, retain_all=True)
   nodes, edges = ox.graph_to_gdfs(G)
   print(nodes)
   print(edges)
@@ -38,7 +38,7 @@ try:
   # edges.to_file("maryland_edges.shp")
   # G = ox.gdfs_to_graph(nodes, edges)
   # G = osm.to_graph(nodes, edges, graph_type="networkx")
-  print(G.nodes(data=True))
+  # print(G.nodes(data=True))
   # drive_net.show()
   # print(drive_net)
 except:
