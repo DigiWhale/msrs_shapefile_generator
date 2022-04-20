@@ -29,7 +29,7 @@ try:
   print('Extracting drivable roads...')
   # nodes, edges = osm.get_network(network_type="driving", nodes=True)
   G = ox.graph_from_bbox(ymax, ymin, xmax, xmin, network_type='drive')
-  nodes, edges = ox.graph_to_gdfs(G, edges=True)
+  nodes, edges = ox.graph_to_gdfs(G, edges=True, nodes=True, node_geometry=True, fill_edge_geometry=True)
   print('Extracting drivable roads... done')
   fig, ax = ox.plot_graph(ox.project_graph(G))
   fig.savefig('maryland.png')
