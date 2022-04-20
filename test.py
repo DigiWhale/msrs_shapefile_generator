@@ -28,7 +28,7 @@ try:
   # drive_net.to_file("maryland.shp")
   print('Extracting drivable roads...')
   # nodes, edges = osm.get_network(network_type="driving", nodes=True)
-  G = ox.graph_from_bbox(xmax, xmin, ymax, ymin, network_type='drive')
+  G = ox.graph_from_bbox(ymax, ymin, xmax, xmin, network_type='drive')
   print('Extracting drivable roads... done')
   # edges.to_file("maryland_edges.shp")
   # G = osm.to_graph(nodes, edges, graph_type="networkx")
