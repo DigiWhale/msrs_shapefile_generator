@@ -60,7 +60,7 @@ except:
 # cropped_map_data = geodf.cx[xmin:xmax, ymin:ymax]
 
 # map_con = InMemMap(cropped_map_data, use_latlon=True, use_rtree=True, index_edges=True)
-map_con = InMemMap("mymap", graph=G, use_latlon=True, index_edges=True)
+map_con = InMemMap("mymap", graph=G, use_latlon=True, index_edges=True, use_rtree=True)
 
 # for entity in osmread.parse_file(cropped_map_data):
 #     if isinstance(entity, osmread.Way) and 'highway' in entity.tags:
