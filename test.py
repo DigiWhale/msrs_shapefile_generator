@@ -73,7 +73,7 @@ for index, row in df.iterrows():
     path.append((df['jetson_rpi_lat'].iloc[index], df['jetson_rpi_lng'].iloc[index]))
 
 matcher = DistanceMatcher(map_con, max_dist=2, obs_noise=1, min_prob_norm=0.5, max_lattice_width=5)
-states, _ = matcher.match(path)
+# states, _ = matcher.match(path)
 nodes = matcher.path_pred_onlynodes
 
 print("States\n------")
